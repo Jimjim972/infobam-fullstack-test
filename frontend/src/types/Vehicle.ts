@@ -15,7 +15,7 @@ export interface Vehicle {
   updatedAt: Date;
 }
 
-enum VehicleType {
+export enum VehicleType {
   SUV = "SUV",
   SEDAN = "SEDAN",
   TRUCK = "TRUCK",
@@ -24,7 +24,7 @@ enum VehicleType {
   ELECTRIC = "ELECTRIC",
 }
 
-enum FuelType {
+export enum FuelType {
   GASOLINE = "GASOLINE",
   DIESEL = "DIESEL",
   ELECTRIC = "ELECTRIC",
