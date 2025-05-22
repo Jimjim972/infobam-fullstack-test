@@ -3,8 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #ffffff;
+  --color-primary: #2563eb;      /* bleu */
+  --color-primary-hover: #1d4ed8;
+  --color-bg: #f9fafb;
+  --color-error-bg: #fee2e2;
+  --color-error-text: #b91c1c;
+  --color-white: #fff;
 }
 
 @media (prefers-color-scheme: dark) {
