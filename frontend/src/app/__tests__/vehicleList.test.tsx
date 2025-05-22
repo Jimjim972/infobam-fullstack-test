@@ -1,16 +1,17 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import '@testing-library/jest-dom';
 import VehicleList from "../components/VehicleList";
+import { Vehicle, FuelType, VehicleType } from "@/types/Vehicle";
 
-const vehicles = [
+const vehicles: Vehicle[] = [
   {
     id: "1",
     manufacturer: "BMW",
     model: "X5",
     year: 2022,
-    type: "SUV",
+    type: VehicleType.SUV,
     price: 60000,
-    fuelType: "GASOLINE",
+    fuelType: FuelType.GASOLINE,
     transmission: "AUTO",
     features: [],
     images: [],
@@ -23,9 +24,9 @@ const vehicles = [
     manufacturer: "Tesla",
     model: "Model 3",
     year: 2023,
-    type: "ELECTRIC",
+    type: VehicleType.ELECTRIC,
     price: 45000,
-    fuelType: "ELECTRIC",
+    fuelType: FuelType.ELECTRIC,
     transmission: "AUTO",
     features: [],
     images: [],
@@ -36,18 +37,22 @@ const vehicles = [
 ];
 
 describe("VehicleList", () => {
-  it("affiche la liste des véhicules", () => {
-    render(<VehicleList vehicles={vehicles} />);
-    expect(screen.getByText(/BMW/)).toBeInTheDocument();
-    expect(screen.getByText(/Tesla/)).toBeInTheDocument();
-  });
+ it("affiche la liste des véhicules", () => {
+  render(<VehicleList vehicles={vehicles} />);
+  const items = screen.getAllByTestId("vehicle-item");
+  expect(items).toHaveLength(2);
+  expect(items[0]).toHaveTextContent("BMW");
+  expect(items[1]).toHaveTextContent("Tesla");
+});
 
   it("filtre les véhicules par fabricant", () => {
-    render(<VehicleList vehicles={vehicles} />);
-    fireEvent.change(screen.getByLabelText(/Fabricant/i), { target: { value: "BMW" } });
-    expect(screen.getByText(/BMW/)).toBeInTheDocument();
-    expect(screen.queryByText(/Tesla/)).not.toBeInTheDocument();
-  });
+  render(<VehicleList vehicles={vehicles} />);
+  fireEvent.change(screen.getByLabelText(/Fabricant/i), { target: { value: "BMW" } });
+  const items = screen.getAllByTestId("vehicle-item");
+  expect(items).toHaveLength(1);
+  expect(items[0]).toHaveTextContent("BMW");
+  expect(items.some(item => item.textContent?.includes("Tesla"))).toBe(false);
+});
 
   it("trie les véhicules par prix", () => {
     render(<VehicleList vehicles={vehicles} />);
