@@ -1,5 +1,10 @@
+"use client";
 import React from "react";
-import { Vehicle } from "../../types/vehicle";
+import { Vehicle } from "@/types/Vehicle"; 
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 interface VehicleCardProps {
   vehicle: Vehicle;
@@ -7,7 +12,8 @@ interface VehicleCardProps {
 
 const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle }) => {
   return (
-    <div className="flex flex-col h-full border rounded-lg p-4 shadow hover:shadow-lg transition-shadow bg-white">
+    <Link href={`/vehicle/${vehicle.id}`} className="block h-full">
+    <div data-testid="vehicle-item" className="flex flex-col h-full border rounded-lg p-4 shadow hover:shadow-lg transition-shadow bg-white">
       <div className="w-full aspect-video mb-2 overflow-hidden rounded">
         <img
           src={vehicle.images[0]}
@@ -31,6 +37,7 @@ const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle }) => {
         {vehicle.price} €
       </p>
     </div>
+    </Link>
   );
 };
 
